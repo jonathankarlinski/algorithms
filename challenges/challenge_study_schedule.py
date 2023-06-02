@@ -1,14 +1,13 @@
-def study_schedule(presence_periods, target_time):
+def study_schedule(permanence_period, target_time):
     if target_time is None:
         return None
-    students = 0
 
-    for time in target_time:
-        quantity = 0
-        for period in presence_periods:
-            if period[0] <= time < period[1]:
-                quantity += 1
-        if quantity > students:
-            students = quantity
+    if any(type(period) != tuple or type(period[0]) != int or type(period[1]) != int for period in permanence_period):
+        return None
 
-    return students
+    quantity = 0
+    for start, end in permanence_period:
+        if start <= target_time <= end:
+            quantity += 1
+
+    return quantity
